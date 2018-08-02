@@ -89,6 +89,10 @@ Save the file to your current working directory.
 
 `ggsave("bvtv.pdf", useDingbats=FALSE)`
 
+The graph looks like this. It looks distorted when viewed as a PDF, but looks good when `placed` into an Illustrator file. In Illustrator, the first thing I do is set stroke width for the whole graph to 0.5. That might be the only adjustment you need.
+
+![bvtv.pdf](bvtv.pdf)
+
 ### Notes
 
 `` `BV/TV%`~X2`` the tilde `~` is to set `X2` as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
