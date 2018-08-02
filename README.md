@@ -24,11 +24,11 @@ Read the data into a dataframe `b`.
 
 ## Statistics
 
-Run ANOVA - analysis of variance - statistically test. [more details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. "BV/TV%" needs to be escaped using backticks ` `` ` and the groups column didn't have a header name so R filled in X2 for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
+Run ANOVA - analysis of variance - statistically test. [more details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. "BV/TV%" needs to be escaped using backticks `` ` `` and the groups column didn't have a header name so R filled in X2 for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
 
-`result=aov(`` ` ``BV/TV%`` ` ``~factor(X2),data=bvtv)`
+`result=aov( `` ` `` BV/TV% `` ` `` ~factor(X2),data=bvtv)`
 
-`pairwise.t.test(bvtv$`` ` ``BV/TV%`` ` ``,bvtv$X2,p.adjust="holm")`
+`pairwise.t.test(bvtv$ `` ` `` BV/TV% `` ` `` ,bvtv$X2,p.adjust="holm")`
 
 This should output something like the following with p-values for the pairwise comparisons of the X number of groups you have.
 
@@ -84,7 +84,7 @@ Save the file to your current working directory.
 
 #### Notes
 
-` `` ` `` BV/TV%`` ` ``~X2 ` the tilde `~` is to set `X2` as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
+` `` ` `` BV/TV% `` ` `` ~X2 ` the tilde `~` is to set `X2` as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
 
 `factor()` is only required if your groups are numbers, "continuous variable", but you want them to be treated as a label. In our data, we've numbered our groups: `1,2,3,4,5,6` and group 1 is not smaller than group 6. It's just a different group. 
 
