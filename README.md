@@ -89,9 +89,9 @@ Save the file to your current working directory.
 
 `ggsave("bvtv.pdf", useDingbats=FALSE)`
 
-The graph looks like this. It looks distorted when viewed as a PDF, but looks good when `placed` into an Illustrator file. In Illustrator, the first thing I do is set stroke width for the whole graph to 0.5. That might be the only adjustment you need.
+The graph looks like this. It looks distorted when viewed as a PDF, but looks good when `placed` into an Illustrator file. In Illustrator, the first thing I do is set `stroke width` for the whole graph to `0.5`. That might be the only adjustment you need.
 
-![bvtv.pdf](bvtv.pdf)
+![bvtv.pdf](bvtv.jpeg)
 
 ### Notes
 
