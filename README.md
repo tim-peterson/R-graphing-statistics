@@ -10,25 +10,25 @@ Download R studio: [Windows](https://download1.rstudio.org/RStudio-1.1.456.exe) 
 
 There are two ways to import data. (1) You can pick the data file from the R Studio File menu or (2) you can use the R Studio console. I prefer to use the console because it will help new users get more comfortable working with the R language. 
 
-*Console (preferred):* It's a good idea to start by setting the working directory. This is both so you know the relative path R Studio will be grabbing the data file from and because this is where `ggsave()` save the graphs you'll be generating, see below)
+*Console (preferred):* It's a good idea to start by setting the working directory. This is both so you know the relative path R Studio will be grabbing the data file from and because this is where `ggsave()` saves the graphs you'll be generating, see below).
 
-- Set working directory to some folder.
+Set working directory to some folder.
 
-	`setwd("/Users/timrpeterson/r/R-graphing-statistics/graphs")`
+`setwd("/Users/timrpeterson/r/R-graphing-statistics/graphs")`
 
-- Read the data into a dataframe `b`.
+Read the data into a dataframe `b`.
 
-	`bvtv <- read_csv("../bvtv.csv")`
+`bvtv <- read_csv("../bvtv.csv")`
 
 *File menu*: Click File -> Import Dataset -> From CSV -> click on the data file. This will import your data and store it locally as a data.frame. By default, the name of the data.frame will be the same as the file name.
 
 ## Statistics
 
-- Run ANOVA - analysis of variance - statistically test. [more details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. "BV/TV%" needs to be escaped using backticks ` `` ` and the groups column didn't have a header name so R filled in X2 for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
+Run ANOVA - analysis of variance - statistically test. [more details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. "BV/TV%" needs to be escaped using backticks ` `` ` and the groups column didn't have a header name so R filled in X2 for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
 
-	`result=aov(`` ` ``BV/TV%`` ` ``~factor(X2),data=bvtv)`
+`result=aov(`` ` ``BV/TV%`` ` ``~factor(X2),data=bvtv)`
 
-	`pairwise.t.test(bvtv$`` ` ``BV/TV%`` ` ``,bvtv$X2,p.adjust="holm")`
+`pairwise.t.test(bvtv$`` ` ``BV/TV%`` ` ``,bvtv$X2,p.adjust="holm")`
 
 This should output something like the following with p-values for the pairwise comparisons of the X number of groups you have.
 
@@ -64,25 +64,27 @@ One can also try Tukey's method.
 
 ## Graphing
 
-- Load ggplot graphing library. If not installed, run this: `install.packages(ggplot2)`
+Load ggplot graphing library. If not installed, run this: `install.packages(ggplot2)`
 
-	`library(ggplot2)`  
+`library(ggplot2)`  
 
--  Store the graph as a variable, `p`.
+Store the graph as a variable, `p`.
 
-	`p <- ggplot(bvtv, aes(factor(X2), `BV/TV%`, fill=factor(X2)))`
+`p <- ggplot(bvtv, aes(factor(X2), `BV/TV%`, fill=factor(X2)))`
 
-- This is where all the magic happens. Customize all these values to 
+This is where all the magic happens. Customize all these values to 
 
-	p + geom_boxplot() + geom_point(size = 5,  fill="white", stroke=2, shape=21) + geom_jitter(width = 0.2, size = 5,  fill="white", stroke=2, shape=21) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),panel.grid.minor = element_blank(), axis.line = element_line(colour = "#979798")) + scale_fill_manual(values=c("#ffffff", "#d1d3d4", "#d1d3d4", "#ffffff", "#14426f", "#14426f"), name = "Groups", labels = c("WT-SHAM", "WT+OVX", "WT+OVX+ALN", "KO-SHAM", "KO+OVX", "KO+OVX+ALN")) + stat_summary(geom = "crossbar", width=0.75, fatten=0, color="#da1a5e", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + scale_x_discrete(name ="Group")
+```
+p + geom_boxplot() + geom_point(size = 5,  fill="white", stroke=2, shape=21) + geom_jitter(width = 0.2, size = 5,  fill="white", stroke=2, shape=21) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),panel.grid.minor = element_blank(), axis.line = element_line(colour = "#979798")) + scale_fill_manual(values=c("#ffffff", "#d1d3d4", "#d1d3d4", "#ffffff", "#14426f", "#14426f"), name = "Groups", labels = c("WT-SHAM", "WT+OVX", "WT+OVX+ALN", "KO-SHAM", "KO+OVX", "KO+OVX+ALN")) + stat_summary(geom = "crossbar", width=0.75, fatten=0, color="#da1a5e", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + scale_x_discrete(name ="Group")
+```
 
-- Save the file to your current working directory. 
+Save the file to your current working directory. 
 
-	`ggsave("bvtv.pdf", useDingbats=FALSE)`
+`ggsave("bvtv.pdf", useDingbats=FALSE)`
 
 #### Notes
 
-` `` ` `` BV/TV%`~X2 `` ` `` ` the tilde `~` is to set X2 as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
+` `` ` `` BV/TV%`` ` ``~X2 ` the tilde `~` is to set `X2` as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
 
 `factor()` is only required if your groups are numbers, "continuous variable", but you want them to be treated as a label. In our data, we've numbered our groups: `1,2,3,4,5,6` and group 1 is not smaller than group 6. It's just a different group. 
 
@@ -93,7 +95,7 @@ One can also try Tukey's method.
 `stat_summary()` was used mainly to give the median line a different color than the other border colors.
 
 
-If your data.frame, let's say its called `uCT`, has multiple parameters and `na` values because you the row lengths are unequal, you can omit `na` values in the `uCT` data.frame and generate a `BVTV` dataframe of just the BV/TV% data
+If your data.frame, let's say its called `uCT`, has multiple parameters and `na` values because the row lengths are unequal, you can omit `na` values in the `uCT` data.frame and generate a `BVTV` dataframe that is a subset of `uCT` that includes just the BV/TV% data.
 
 `BVTV <- na.omit(uCT[,c("BV/TV%","X2")])`
 
