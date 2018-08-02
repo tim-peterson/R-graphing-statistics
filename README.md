@@ -24,7 +24,7 @@ Read the data into a dataframe `b`.
 
 ## Statistics
 
-Run ANOVA - analysis of variance - statistically test. [more details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. `BV/TV%` needs to be escaped using backticks `` ` `` and the groups column didn't have a header name so R filled in `X2` for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
+Run ANOVA - analysis of variance - statistically test. [More details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. `BV/TV%` needs to be escaped using backticks `` ` `` and the groups column didn't have a header name so R filled in `X2` for us. See [Notes](#notes) at the bottom to learn more about `factor()` and the tilde `~`.
 
 ``result=aov(`BV/TV%`~factor(X2),data=bvtv)``
 
@@ -72,17 +72,17 @@ Store the graph as a variable, `p`.
 
 ``p <- ggplot(bvtv, aes(factor(X2), `BV/TV%`, fill=factor(X2)))``
 
-This is where all the magic happens. Customize all these values to 
+This is where all the magic happens. I.e., R Studio graphs your data. See [Notes](#notes) below.
 
-```
-p + geom_boxplot() + geom_point(size = 5,  fill="white", stroke=2, shape=21) + geom_jitter(width = 0.2, size = 5,  fill="white", stroke=2, shape=21) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),panel.grid.minor = element_blank(), axis.line = element_line(colour = "#979798")) + scale_fill_manual(values=c("#ffffff", "#d1d3d4", "#d1d3d4", "#ffffff", "#14426f", "#14426f"), name = "Groups", labels = c("WT-SHAM", "WT+OVX", "WT+OVX+ALN", "KO-SHAM", "KO+OVX", "KO+OVX+ALN")) + stat_summary(geom = "crossbar", width=0.75, fatten=0, color="#da1a5e", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + scale_x_discrete(name ="Group")
-```
+
+	p + geom_boxplot() + geom_point(size = 5,  fill="white", stroke=2, shape=21) + geom_jitter(width = 0.2, size = 5,  fill="white", stroke=2, shape=21) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),panel.grid.minor = element_blank(), axis.line = element_line(colour = "#979798")) + scale_fill_manual(values=c("#ffffff", "#d1d3d4", "#d1d3d4", "#ffffff", "#14426f", "#14426f"), name = "Groups", labels = c("WT-SHAM", "WT+OVX", "WT+OVX+ALN", "KO-SHAM", "KO+OVX", "KO+OVX+ALN")) + stat_summary(geom = "crossbar", width=0.75, fatten=0, color="#da1a5e", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + scale_x_discrete(name ="Group")
+
 
 Save the file to your current working directory. 
 
 `ggsave("bvtv.pdf", useDingbats=FALSE)`
 
-#### Notes
+### Notes
 
 `` `BV/TV%`~X2`` the tilde `~` is to set `X2` as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
 
