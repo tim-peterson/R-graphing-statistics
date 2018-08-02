@@ -43,7 +43,9 @@ This means that there is a highly statistically significant difference when comp
 
 One can also try Tukey's method. 
 
-`TukeyHSD(result,conf.level=0.95)`
+`tt <- TukeyHSD(result,conf.level=0.95)`
+
+`print(tt)`
 
 	           diff        lwr        upr     p adj
 	2-1  -4.0608333 -12.058594   3.936928 0.6656398
@@ -62,13 +64,18 @@ One can also try Tukey's method.
 	6-4  10.0633333   1.258088  18.868579 0.0163264
 	6-5  10.8180808   2.422609  19.213553 0.0046312
 
+
+Once again you can see a highly statistically significant difference when comparing groups 2 and 3 (`3-2`), `0.0000000` (assuming a p <= 0.05 threshold). Whereas, groups 1 and 2 (`2-1`) aren't statistically different, `0.6656398`. 	You can see that's similiar to using the Holm's method. The p-values are only shown to 8 decimal points so to get the exact value you can print to whatever decimal places you need. 
+
+`print(tt,digits=15)`
+
 ## Graphing
 
-Load ggplot graphing library. If not installed, run this: `install.packages(ggplot2)`
+Load [ggplot](https://cran.r-project.org/web/packages/ggplot2/index.html) graphing library. If it's not installed, run this: `install.packages(ggplot2)`. For some examples on how to use ggplot, go [here](https://ggplot2.tidyverse.org/reference/geom_boxplot.html#examples). Interestingly enough, R comes installed with an example data.frame of data `mpg` that you can play with.
 
 `library(ggplot2)`  
 
-Store the graph as a variable, `p`.
+Store the graph as a variable, e.g., `p`.
 
 ``p <- ggplot(bvtv, aes(factor(X2), `BV/TV%`, fill=factor(X2)))``
 
