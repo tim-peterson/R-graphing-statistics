@@ -1,11 +1,12 @@
 # R-graphing-statistics 
+
 #### (demo'd on data from mouse bone [micro-computed tomography (uCT)](http://www.musculoskeletalcore.wustl.edu/content/Core/2976/B-Structure-and-Strength-Core/Services/Technical-Notes-and-Presentations.aspx))
 
-1. Download R: [Windows](https://cran.r-project.org/bin/windows/base/R-3.5.1-win.exe) | [Mac](https://cran.r-project.org/bin/macosx/R-3.5.1.pkg)
+Download R: [Windows](https://cran.r-project.org/bin/windows/base/R-3.5.1-win.exe) | [Mac](https://cran.r-project.org/bin/macosx/R-3.5.1.pkg)
 
-2. Download R studio: [Windows](https://download1.rstudio.org/RStudio-1.1.456.exe) | [Mac](https://download1.rstudio.org/RStudio-1.1.456.dmg)
+Download R studio: [Windows](https://download1.rstudio.org/RStudio-1.1.456.exe) | [Mac](https://download1.rstudio.org/RStudio-1.1.456.dmg)
 
-3. Import data
+## Import data
 
 There are two ways to import data. (1) You can pick the data file from the R Studio File menu or (2) you can use the R Studio console. I prefer to use the console because it will help new users get more comfortable working with the R language. 
 
@@ -23,11 +24,11 @@ There are two ways to import data. (1) You can pick the data file from the R Stu
 
 ## Statistics
 
-4. Run ANOVA - analysis of variance - statistically test. [more details](Analysis of variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. "BV/TV%" needs to be escaped using backticks ` `` ` and the groups column didn't have a header name so R filled in X2 for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
+- Run ANOVA - analysis of variance - statistically test. [more details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. "BV/TV%" needs to be escaped using backticks ` `` ` and the groups column didn't have a header name so R filled in X2 for us. See "Notes" at the bottom to learn more about `factor()` and the tilde `~`.
 
-	`result=aov(`BV/TV%`~factor(X2),data=bvtv)`
+	`result=aov(`` ` ``BV/TV%`` ` ``~factor(X2),data=bvtv)`
 
-	`pairwise.t.test(bvtv$`BV/TV%`,bvtv$X2,p.adjust="holm")`
+	`pairwise.t.test(bvtv$`` ` ``BV/TV%`` ` ``,bvtv$X2,p.adjust="holm")`
 
 This should output something like the following with p-values for the pairwise comparisons of the X number of groups you have.
 
@@ -73,7 +74,7 @@ One can also try Tukey's method.
 
 - This is where all the magic happens. Customize all these values to 
 
-	`p + geom_boxplot() + geom_point(size = 5,  fill="white", stroke=2, shape=21) + geom_jitter(width = 0.2, size = 5,  fill="white", stroke=2, shape=21) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),panel.grid.minor = element_blank(), axis.line = element_line(colour = "#979798")) + scale_fill_manual(values=c("#ffffff", "#d1d3d4", "#d1d3d4", "#ffffff", "#14426f", "#14426f"), name = "Groups", labels = c("WT-SHAM", "WT+OVX", "WT+OVX+ALN", "KO-SHAM", "KO+OVX", "KO+OVX+ALN")) + stat_summary(geom = "crossbar", width=0.75, fatten=0, color="#da1a5e", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + scale_x_discrete(name ="Group") `
+	p + geom_boxplot() + geom_point(size = 5,  fill="white", stroke=2, shape=21) + geom_jitter(width = 0.2, size = 5,  fill="white", stroke=2, shape=21) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),panel.grid.minor = element_blank(), axis.line = element_line(colour = "#979798")) + scale_fill_manual(values=c("#ffffff", "#d1d3d4", "#d1d3d4", "#ffffff", "#14426f", "#14426f"), name = "Groups", labels = c("WT-SHAM", "WT+OVX", "WT+OVX+ALN", "KO-SHAM", "KO+OVX", "KO+OVX+ALN")) + stat_summary(geom = "crossbar", width=0.75, fatten=0, color="#da1a5e", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + scale_x_discrete(name ="Group")
 
 - Save the file to your current working directory. 
 
@@ -81,7 +82,7 @@ One can also try Tukey's method.
 
 #### Notes
 
-``BV/TV%`~X2`` the tilde `~` is to set X2 as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
+` `` ` `` BV/TV%`~X2 `` ` `` ` the tilde `~` is to set X2 as the dependent variable and `BV/TV%` as the independent variable. This is like telling R, what's the X and Y axis.
 
 `factor()` is only required if your groups are numbers, "continuous variable", but you want them to be treated as a label. In our data, we've numbered our groups: `1,2,3,4,5,6` and group 1 is not smaller than group 6. It's just a different group. 
 
