@@ -24,6 +24,35 @@ Read the data into a dataframe `b`.
 
 ## Statistics
 
+To get simple median, mean, quartile data run this:
+
+``tapply(bvtv$`BV/TV%`, bvtv$X2, summary)``
+
+	$`1`
+	   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+	  6.250   6.858   7.855  10.010   9.465  25.270 
+
+	$`2`
+	   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+	  4.380   4.938   5.810   5.949   6.965   8.080 
+
+	$`3`
+	   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+	  10.76   20.60   32.70   27.76   35.43   38.04 
+
+	$`4`
+	   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+	  4.780   5.020   8.140   7.601   9.500  10.250 
+
+	$`5`
+	   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+	  3.930   5.055   5.690   6.846   7.810  13.160 
+
+	$`6`
+	   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+	   6.04    9.94   14.36   17.66   25.07   35.61 
+
+
 Run ANOVA - analysis of variance - statistically test. [More details](https://github.com/tim-peterson/R-graphing-statistics/blob/master/Analysis%20of%20variance.pdf). You'll notice I intentionally gave the header columns bad names so that you can see a more real world scenario. `BV/TV%` needs to be escaped using backticks `` ` `` and the groups column didn't have a header name so R filled in `X2` for us. See [Notes](#notes) at the bottom to learn more about `factor()` and the tilde `~`.
 
 ``result=aov(`BV/TV%`~factor(X2),data=bvtv)``
@@ -109,4 +138,6 @@ The graph looks like this. It looks distorted when viewed as a PDF, but looks go
 If your data.frame, let's say its called `uCT`, has multiple parameters and `na` values because the row lengths are unequal, you can omit `na` values in the `uCT` data.frame and generate a `BVTV` dataframe that is a subset of `uCT` that includes just the BV/TV% data.
 
 `BVTV <- na.omit(uCT[,c("BV/TV%","X2")])`
+
+
 
